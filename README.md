@@ -92,3 +92,11 @@ To run this project locally:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/yourusername/arabic-poetry-generator.git
+
+2. **Install Streamlit and ibm_watsonx_ai:**
+   ```bash
+   pip install streamlit
+   pip install ibm-watsonx-ai
+
+
+
