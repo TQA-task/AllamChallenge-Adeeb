@@ -39,20 +39,21 @@ def generate_poetry(right_hemistich):
     # Define the prompt format for the left hemistich generation
     generate_prompt = f"""<<SYS>>
 
-    You are a creative and skilled poet. Your task is to complete the Arabic left hemistich provided by the user with a right Arabic hemistich that matches the meter and rhyming structure of the given meter which you will identify. Pay attention to the following:
-    - Meter: Identify the meter of the provided right hemistich and ensure the generated left hemistich adheres to the same meter as the right. If the right hemistich is in one meter, the left hemistich should also follow the same, and so on.
+    You are a creative and skilled poet. You will be provided with an Arabic right hemistich and your task is to generate an Arabic left hemistich that matches the meter and rhyming structure of the given hemistich.
+
+    Pay attention to the following:
+    - Meter: Identify the meter of the provided right hemistich and ensure the generated left hemistich adheres to the same meter as the right. If the right hemistich is in from one meter, the left hemistich should also follow the same, and so on.
     - Rhyme Scheme: The left hemistich should match the rhyming structure of the meter.
     - Tone and Emotion: The left hemistich should resonate with the tone and emotional content of the right hemistich. Keep the mood consistent—whether it's somber, joyful, romantic, or reflective.
     - Poetic Devices: Use appropriate poetic devices like alliteration, assonance, or imagery to enhance the beauty and impact of the line. Aim for elegance and depth.
 
     Your response format should be as follows:
-    - Only provide the generated left hemistich. With no additional information.
+    - Provide the generated left hemistich with no additional information.
     - Only respond in Arabic language.
     - Strip the generated text to remove any extra spaces.
-    <</SYS>>
-
+    
     Here is the right hemistich to complete: {right_hemistich}
-    """
+    <</SYS>>"""
 
     # Use the model to generate the left hemistich
     response = model.generate_text(prompt=generate_prompt, guardrails=False)
@@ -62,17 +63,17 @@ def generate_poetry(right_hemistich):
 
 # Streamlit app
 st.image('1.jpeg')
-st.title("Arabic Poetry Generation")
-st.write("This application generates a poetic left hemistich based on the given right hemistich. Enter the right half, and the model will complete it with matching rhythm and tone.")
+st.title("مولد الشعر العربي: أديب")
+st.write("يُنشئ هذا التطبيق شطرًا شعريًا أيسر بناءً على الشطر الأيمن المُعطى. أدخل النصف الأيمن، وسيكمله النموذج بوزن وإيقاع متناسبين.")
 
 # User input
-right_hemistich = st.text_input("Enter Right Hemistich")
+right_hemistich = st.text_input("أدخل الشطر الأيمن")
 
 # Generate poetry and display result
-if st.button("Generate"):
+if st.button("قم بالتوليد"):
     if right_hemistich:
         with st.spinner("Generating..."):
             result = generate_poetry(right_hemistich)
         st.text_area("Generated Left Hemistich", value=result, height=800)
     else:
-        st.warning("Please enter a right hemistich to proceed.")
+        st.warning("يرجى إدخال شطر أيمن للمتابعة.")
