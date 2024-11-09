@@ -1,5 +1,4 @@
 import streamlit as st
-import getpass
 import os
 from ibm_watsonx_ai.foundation_models import Model
 
@@ -33,47 +32,60 @@ model = Model(
     project_id=project_id,
 )
 
+
+def save_first_arabic_text(output):
+    # Split by newline and check if the first line is Arabic
+    lines = output.splitlines()
+    for line in lines:
+        # Check if the line contains Arabic characters
+        if any("\u0600" <= char <= "\u06FF" for char in line):
+            # Save the first Arabic line to a file
+            with open("first_arabic_text.txt", "w", encoding="utf-8") as file:
+                file.write(line.strip())
+            return line.strip()  # Return the Arabic line for verification
+    return "No Arabic text found"
+    
 # Function to generate poetry based on user input (right hemistich)
 def generate_poetry(right_hemistich):
-    generate_prompt = f"""<<SYS>>
+    generate_prompt = """<<SYS>>
+        You are a creative and skilled poet. You will be provided with an Arabic right hemistich and your task is to generate an Arabic left hemistich that matches the meter and rhyming structure of the given hemistich.
 
-    You are a creative and skilled poet. You will be provided with an Arabic right hemistich and your task is to generate an Arabic left hemistich that matches the meter and rhyming structure of the given hemistich.
+        Pay attention to the following:
+        - Meter: Identify the meter of the provided right hemistich and ensure the generated left hemistich adheres to the same meter as the right. If the right hemistich is in from one meter, the left hemistich should also follow the same, and so on.
+        - Rhyme Scheme: The left hemistich should match the rhyming structure of the meter.
+        - Tone and Emotion: The left hemistich should resonate with the tone and emotional content of the right hemistich. Keep the mood consistent—whether it's somber, joyful, romantic, or reflective.
+        - Poetic Devices: Use appropriate poetic devices like alliteration, assonance, or imagery to enhance the beauty and impact of the line. Aim for elegance and depth.
 
-    Pay attention to the following:
-    - Meter: Identify the meter of the provided right hemistich and ensure the generated left hemistich adheres to the same meter as the right. If the right hemistich is in from one meter, the left hemistich should also follow the same, and so on.
-    - Rhyme Scheme: The left hemistich should match the rhyming structure of the meter.
-    - Tone and Emotion: The left hemistich should resonate with the tone and emotional content of the right hemistich. Keep the mood consistent—whether it's somber, joyful, romantic, or reflective.
-    - Poetic Devices: Use appropriate poetic devices like alliteration, assonance, or imagery to enhance the beauty and impact of the line. Aim for elegance and depth.
-
-    Your response should be as follows:
-    - Only respond in Arabic language.
-    - Provide only one generated left hemistich with NO additional text or information.  
-    - Strip the generated text to remove any extra spaces.
+        Your response format should be as follows:
+        - Provide the generated left hemistich with no additional information.
+        - Only respond in Arabic language.
+        - Strip the generated text to remove any extra spaces.
+        <</SYS>>"""
     
-    Here is the right hemistich to complete: {right_hemistich}
-    <</SYS>>"""
-
-    response = model.generate_text(prompt=generate_prompt, guardrails=False)
-    return response.strip()
-
+    formattedQuestion = f"""<s>[/INST]Here is the right hemistich to complete: {right_hemistich}[/INST]"""
+    prompt = f"""{generate_prompt}{formattedQuestion}"""
+    generated_response = model.generate_text(prompt=prompt, guardrails=False)
+        
+    response = save_first_arabic_text(generated_response)
+    return response.strip() if response else "No response generated."
+    
 # Function to critique the generated left hemistich
-def critique_poetry(generated_left_hemistich):
-    critique_prompt = f"""<<SYS>>
+def critique_poetry(r_hemistich, generated_left_hemistich):
+    critique_prompt = """<<SYS>>
+        You are a creative and skilled poet. Your task is to criticize the language, flow, structure, theme, style and rhythm of this given hemistich. Give tips for how to improve it and suggest a new and different enhnanced left hemistich.
+        Your response format should be as follows:
+        - Only respond in Arabic language.
+        <</SYS>>"""
+        
+    formattedQuestion = f"""<s>[/INST]Right hemistich: {r_hemistich}, Left hemistich: {generated_left_hemistich}[/INST]"""
+    prompt = f"""{critique_prompt}{formattedQuestion}"""
+    generated_response = model.generate_text(prompt=prompt, guardrails=False)
+ 
+    return generated_response.strip() if generated_response else "No critique generated."
 
-    You are a creative and skilled poet. Your task is to criticize the language, flow, structure, theme, style and rhythm of this given hemistich. Give tips for how to improve it and suggest a new enhnanced left hemistich.
-    Your response should be as follows:
-    - Translate your response to Arabic language.
-    - Provide the generated left hemistich and the identified meter separated by a hash symbol
-    - your response should be one line only.
-    - Strip the generated text to remove any extra spaces.
 
-    Here is the generated left hemistich: {generated_left_hemistich}
-    <</SYS>>"""
-
-    response = model.generate_text(prompt=critique_prompt, guardrails=False)
-    return response.strip()
-
-st.image('1.jpeg', width=300)
+# Streamlit Interface
+st.image('Adeeb2.png', width=300)
 st.markdown("<h1 style='text-align: right;'>مولد الشعر العربي: أديب</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: right;'>يُنشئ هذا التطبيق شطرًا شعريًا أيسر بناءً على الشطر الأيمن المُعطى. أدخل النصف الأيمن، وسيكمله النموذج بوزن وإيقاع متناسبين.</p>", unsafe_allow_html=True)
 
@@ -100,7 +112,7 @@ if st.button("قم بالتوليد"):
 if st.button("عرض النقد"):
     if st.session_state.left_hemistich:
         with st.spinner("توليد النقد..."):
-            critique = critique_poetry(st.session_state.left_hemistich)
+            critique = critique_poetry(right_hemistich, st.session_state.left_hemistich)
         st.markdown("<h2 style='text-align: right;'>النقد والتحسين</h2>", unsafe_allow_html=True)
         st.text_area("", value=critique, height=200, key="critique_text", label_visibility="collapsed")
     else:
