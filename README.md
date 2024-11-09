@@ -24,7 +24,7 @@ An AI-based system designed to generate Arabic poetry that aligns with tradition
 
 ## Team Members
 
-- Hessa Abdulrahman Alawwad
+- Hessa
 - Lujain
 - Noura
 - Lama
