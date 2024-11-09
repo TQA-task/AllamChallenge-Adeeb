@@ -1,4 +1,4 @@
-# AI-Powered Arabic Poetry Generator
+# Adeeb: AI-Powered Arabic Poetry Generator
 
 An AI-based system designed to generate Arabic poetry that aligns with traditional poetic rules and structures. This project aids users in creating cohesive, contextually meaningful, and rhythmically accurate lines of poetry, enhancing compositions with verses that respect the rhythm, meter, and rhyme of Arabic poetry.
 نظام يعتمد على الذكاء الاصطناعي لتوليد الأبيات الشعرية العربية بما يتوافق مع قواعد الشعر التقليدية. يهدف المشروع إلى مساعدة المستخدمين على إكمال قصائدهم بإضافة أبيات متناسقة ومتوافقة مع الوزن والقافية والسياق الشعري.
