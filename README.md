@@ -1,5 +1,5 @@
 
-![Adeeb](https://raw.githubusercontent.com/TQA-task/AllamChallenge-Adeeb/refs/heads/main/1.jpeg)
+<img src="https://raw.githubusercontent.com/TQA-task/AllamChallenge-Adeeb/refs/heads/main/1.jpeg" alt="Adeeb" width="300"/>
 
 
 # Adeeb: AI-Powered Arabic Poetry Generator
