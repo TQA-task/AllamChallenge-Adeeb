@@ -7,7 +7,7 @@ from ibm_watsonx_ai.foundation_models import Model
 def get_credentials():
     return {
         "url": "https://eu-de.ml.cloud.ibm.com",
-        "apikey": ""
+        "apikey": "FwNK4ev9erRUbujANgK8HTfsAFwjYfBYVDdzfG7Lf89g"
     }
 
 # Define your model ID and parameters
@@ -35,7 +35,6 @@ model = Model(
 
 # Function to generate poetry based on user input (right hemistich)
 def generate_poetry(right_hemistich):
-    # Define the prompt format for the left hemistich generation
     generate_prompt = f"""<<SYS>>
 
     You are a creative and skilled poet. You will be provided with an Arabic right hemistich and your task is to generate an Arabic left hemistich that matches the meter and rhyming structure of the given hemistich.
@@ -47,32 +46,76 @@ def generate_poetry(right_hemistich):
     - Poetic Devices: Use appropriate poetic devices like alliteration, assonance, or imagery to enhance the beauty and impact of the line. Aim for elegance and depth.
 
     Your response format should be as follows:
-    - Provide the generated left hemistich with no additional information.
     - Only respond in Arabic language.
+    - Provide only one generated left hemistich with NO additional text or information.  
     - Strip the generated text to remove any extra spaces.
     
     Here is the right hemistich to complete: {right_hemistich}
     <</SYS>>"""
 
-    # Use the model to generate the left hemistich
     response = model.generate_text(prompt=generate_prompt, guardrails=False)
-    generated_left_hemistich = response.strip()  # Strip unnecessary spaces
+    return response.strip()
 
-    return generated_left_hemistich
+# Function to critique the generated left hemistich
+def critique_poetry(generated_left_hemistich):
+    critique_prompt = f"""<<SYS>>
+
+    You are a creative and skilled poet. Your task is to criticize the language, flow, structure, theme, style and rhythm of this given hemistich. Give tips for how to improve it and suggest a new enhnanced left hemistich.
+    Your response format should be as follows:
+    - Only respond in Arabic language.
+    - Provide the generated left hemistich and the identified meter separated by a hash symbol
+    - your response should be one line only.
+    - Strip the generated text to remove any extra spaces.
+
+    Here is the generated left hemistich: {generated_left_hemistich}
+    <</SYS>>"""
+
+    response = model.generate_text(prompt=critique_prompt, guardrails=False)
+    return response.strip()
 
 # Streamlit app
-st.image('1.jpeg')
-st.title("مولد الشعر العربي: أديب")
-st.write("يُنشئ هذا التطبيق شطرًا شعريًا أيسر بناءً على الشطر الأيمن المُعطى. أدخل النصف الأيمن، وسيكمله النموذج بوزن وإيقاع متناسبين.")
+st.image('1.jpeg', width=300)
+st.markdown("<h1 style='text-align: right;'>مولد الشعر العربي: أديب</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: right;'>يُنشئ هذا التطبيق شطرًا شعريًا أيسر بناءً على الشطر الأيمن المُعطى. أدخل النصف الأيمن، وسيكمله النموذج بوزن وإيقاع متناسبين.</p>", unsafe_allow_html=True)
 
 # User input
-right_hemistich = st.text_input("أدخل الشطر الأيمن")
+right_hemistich = st.text_input("أدخل الشطر الأيمن", key="right_hemistich")
+
+# Initialize session state to store generated left hemistich
+if "left_hemistich" not in st.session_state:
+    st.session_state.left_hemistich = None
 
 # Generate poetry and display result
 if st.button("قم بالتوليد"):
     if right_hemistich:
-        with st.spinner("Generating..."):
-            result = generate_poetry(right_hemistich)
-        st.text_area("Generated Left Hemistich", value=result, height=800)
+        with st.spinner("جاري التوليد..."):
+            left_hemistich = generate_poetry(right_hemistich)
+            st.session_state.left_hemistich = left_hemistich  # Store in session state
+
+        st.markdown("<h2 style='text-align: right;'>الشطر الأيسر المُولد</h2>", unsafe_allow_html=True)
+        st.text_area("", value=st.session_state.left_hemistich, height=200, key="generated_text", label_visibility="collapsed")
     else:
         st.warning("يرجى إدخال شطر أيمن للمتابعة.")
+
+# Critique button
+if st.button("عرض النقد"):
+    if st.session_state.left_hemistich:
+        with st.spinner("توليد النقد..."):
+            critique = critique_poetry(st.session_state.left_hemistich)
+        st.markdown("<h2 style='text-align: right;'>النقد والتحسين</h2>", unsafe_allow_html=True)
+        st.text_area("", value=critique, height=200, key="critique_text", label_visibility="collapsed")
+    else:
+        st.warning("يرجى توليد الشطر الأيسر أولاً.")
+
+# Custom CSS to align text areas to the right
+st.markdown(
+    """
+    <style>
+    textarea {
+        direction: RTL;
+        text-align: right;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
