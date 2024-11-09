@@ -45,7 +45,7 @@ def generate_poetry(right_hemistich):
     - Tone and Emotion: The left hemistich should resonate with the tone and emotional content of the right hemistich. Keep the mood consistent—whether it's somber, joyful, romantic, or reflective.
     - Poetic Devices: Use appropriate poetic devices like alliteration, assonance, or imagery to enhance the beauty and impact of the line. Aim for elegance and depth.
 
-    Your response format should be as follows:
+    Your response should be as follows:
     - Only respond in Arabic language.
     - Provide only one generated left hemistich with NO additional text or information.  
     - Strip the generated text to remove any extra spaces.
@@ -61,8 +61,8 @@ def critique_poetry(generated_left_hemistich):
     critique_prompt = f"""<<SYS>>
 
     You are a creative and skilled poet. Your task is to criticize the language, flow, structure, theme, style and rhythm of this given hemistich. Give tips for how to improve it and suggest a new enhnanced left hemistich.
-    Your response format should be as follows:
-    - Only respond in Arabic language.
+    Your response should be as follows:
+    - Translate your response to Arabic language.
     - Provide the generated left hemistich and the identified meter separated by a hash symbol
     - your response should be one line only.
     - Strip the generated text to remove any extra spaces.
@@ -73,7 +73,6 @@ def critique_poetry(generated_left_hemistich):
     response = model.generate_text(prompt=critique_prompt, guardrails=False)
     return response.strip()
 
-# Streamlit app
 st.image('1.jpeg', width=300)
 st.markdown("<h1 style='text-align: right;'>مولد الشعر العربي: أديب</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: right;'>يُنشئ هذا التطبيق شطرًا شعريًا أيسر بناءً على الشطر الأيمن المُعطى. أدخل النصف الأيمن، وسيكمله النموذج بوزن وإيقاع متناسبين.</p>", unsafe_allow_html=True)
