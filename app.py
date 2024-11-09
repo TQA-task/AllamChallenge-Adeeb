@@ -7,7 +7,7 @@ from ibm_watsonx_ai.foundation_models import Model
 def get_credentials():
     return {
         "url": "https://eu-de.ml.cloud.ibm.com",
-        "apikey": "FwNK4ev9erRUbujANgK8HTfsAFwjYfBYVDdzfG7Lf89g"
+        "apikey": ""
     }
 
 # Define your model ID and parameters
