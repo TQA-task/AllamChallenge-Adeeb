@@ -98,5 +98,9 @@ To run this project locally:
    pip install streamlit
    pip install ibm-watsonx-ai
 
+3. **run the Streamlit app:**
+   ```bash
+   streamlit run app.py
+
 
 
