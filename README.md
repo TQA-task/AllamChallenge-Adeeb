@@ -3,9 +3,9 @@
   <img src="https://raw.githubusercontent.com/TQA-task/AllamChallenge-Adeeb/refs/heads/main/1.jpeg" alt="Sample Generated Arabic Poem" width="300"/>
 </p>
 
-هذا المشروع هو جزء من تحدي علام التابع لسدايا و الاتحاد السعودي للأمن السيبراني والبرمجة والدرونز ويهدف إلى توليد أشطار شعرية عربية يسرى بناءً على أشطار يمنى مُعطاة. يعتمد التطبيق على نماذج الذكاء الاصطناعي لضمان توافق النص المُولد مع الإيقاع والوزن والأسلوب الخاص بالنص الأصلي، مما يحقق تدفقًا شعريًا سلسًا ومتناغمًا.
+هذا المشروع هو جزء من تحدي علام التابع لسدايا و الاتحاد السعودي للأمن السيبراني والبرمجة والدرونز ويهدف إلى توليد أشطار شعرية عربية يسرى بناءً على أشطار يمنى مُعطاة. يعتمد التطبيق على نموذج علام لضمان توافق النص المُولد مع الإيقاع والوزن والأسلوب الخاص بالنص الأصلي، مما يحقق تدفقًا شعريًا سلسًا ومتناغمًا.
 
-This project is part of the **Allam Challenge** and focuses on generating Arabic poetic left hemistichs based on given right hemistichs. The application leverages AI models to ensure the generated text matches the original input's rhythm, meter, and style, creating a seamless poetic flow.
+This project is part of the **Allam Challenge** and focuses on generating Arabic poetic left hemistichs based on given right hemistichs. The application leverages Allam model to ensure the generated text matches the original input's rhythm, meter, and style, creating a seamless poetic flow.
 
 # Adeeb: AI-Powered Arabic Poetry Generator
 نظام يعتمد على الذكاء الاصطناعي لتوليد الأبيات الشعرية العربية بما يتوافق مع قواعد الشعر التقليدية. يهدف المشروع إلى مساعدة المستخدمين على إكمال قصائدهم بإضافة أبيات متناسقة ومتوافقة مع الوزن والقافية والسياق الشعري.
