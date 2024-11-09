@@ -1,3 +1,7 @@
+
+![Adeeb](https://raw.githubusercontent.com/TQA-task/AllamChallenge-Adeeb/refs/heads/main/1.jpeg)
+
+
 # Adeeb: AI-Powered Arabic Poetry Generator
 
 An AI-based system designed to generate Arabic poetry that aligns with traditional poetic rules and structures. This project aids users in creating cohesive, contextually meaningful, and rhythmically accurate lines of poetry, enhancing compositions with verses that respect the rhythm, meter, and rhyme of Arabic poetry.
