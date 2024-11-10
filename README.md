@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/TQA-task/AllamChallenge-Adeeb/refs/heads/main/1.jpeg" alt="Sample Generated Arabic Poem" width="300"/>
+  <img src="https://raw.githubusercontent.com/TQA-task/AllamChallenge-Adeeb/refs/heads/main/Adeeb2.png" alt="Sample Generated Arabic Poem" width="300"/>
 </p>
 
 هذا المشروع هو جزء من تحدي علام التابع لسدايا و الاتحاد السعودي للأمن السيبراني والبرمجة والدرونز ويهدف إلى توليد أشطار شعرية عربية يسرى بناءً على أشطار يمنى مُعطاة. يعتمد التطبيق على نموذج علام لضمان توافق النص المُولد مع الإيقاع والوزن والأسلوب الخاص بالنص الأصلي، مما يحقق تدفقًا شعريًا سلسًا ومتناغمًا.
