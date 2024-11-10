@@ -12,6 +12,9 @@ This project is part of the **Allam Challenge** and focuses on generating Arabic
 
 An AI-based system designed to generate Arabic poetry that aligns with traditional poetic rules and structures. This project aids users in creating cohesive, contextually meaningful, and rhythmically accurate lines of poetry, enhancing compositions with verses that respect the rhythm, meter, and rhyme of Arabic poetry.
 
+## Project Website
+
+You can access the application here: [Allam Challenge - Adeeb](https://allamchallenge-adeeb.streamlit.app/)
 
 
 ## Table of Contents
